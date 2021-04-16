@@ -51,10 +51,6 @@ std::vector<std::string> split_passports(std::string const& input_string)
 	return group_strings;
 }
 
-int count_distinct_characters(std::string const& input_string) {
-	return 1;
-}
-
 int main() {
 	int sumOfGroupCounts = 0;
 	std::ifstream fileContents("input.txt");

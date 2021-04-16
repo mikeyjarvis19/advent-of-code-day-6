@@ -43,7 +43,7 @@ std::vector<std::string> split_passports(std::string const& input_string)
 
 	std::copy(begin, end, std::back_inserter(group_strings));
 
-	// Cleanup the newlines and replace with space character for consistency
+	// Cleanup the newline and space characters
 	for (int i = 0; i < group_strings.size(); i++) {
 		group_strings[i] = remove_char_from_string(group_strings[i], '\n');
 		group_strings[i] = remove_char_from_string(group_strings[i], ' ');

@@ -6,6 +6,27 @@
 #include <sstream>
 #include <algorithm>
 
+int count_unique_characters(std::string input_string) {
+	char* str = const_cast<char*>(input_string.c_str());
+	int count = 0;
+
+	for (int i = 0; i < strlen(str); i++) {
+		bool appears = false;
+		for (int j = 0; j < i; j++) {
+			if (str[j] == str[i]) {
+				appears = true;
+				break;
+			}
+		}
+
+		if (!appears) {
+			count++;
+		}
+	}
+
+	return count;
+}
+
 std::string remove_char_from_string(std::string string_to_clean, char character_to_remove) {
 	string_to_clean.erase(std::remove(string_to_clean.begin(), string_to_clean.end(), character_to_remove), string_to_clean.end());
 	return string_to_clean;
@@ -35,10 +56,14 @@ int count_distinct_characters(std::string const& input_string) {
 }
 
 int main() {
+	int sumOfGroupCounts = 0;
 	std::ifstream fileContents("input.txt");
 	std::stringstream buffer;
 	buffer << fileContents.rdbuf();
 	std::string fileString = buffer.str();
 	auto groupStrings = split_passports(fileString);
-	int i;
+	for (int i = 0; i < groupStrings.size(); i++) {
+		sumOfGroupCounts  += count_unique_characters(groupStrings[i]);
+	}
+	std::cout << "Total count: " << sumOfGroupCounts;
 }

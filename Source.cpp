@@ -4,6 +4,12 @@
 #include <string>
 #include <regex>
 #include <sstream>
+#include <algorithm>
+
+std::string remove_char_from_string(std::string string_to_clean, char character_to_remove) {
+	string_to_clean.erase(std::remove(string_to_clean.begin(), string_to_clean.end(), character_to_remove), string_to_clean.end());
+	return string_to_clean;
+}
 
 std::vector<std::string> split_passports(std::string const& input_string)
 {
@@ -18,15 +24,14 @@ std::vector<std::string> split_passports(std::string const& input_string)
 
 	// Cleanup the newlines and replace with space character for consistency
 	for (int i = 0; i < group_strings.size(); i++) {
-		for (size_t j = 0; j < group_strings[i].length(); j++)
-		{
-			if (group_strings[i][j] == '\n')
-			{
-				group_strings[i][j] = ' ';
-			}
-		}
+		group_strings[i] = remove_char_from_string(group_strings[i], '\n');
+		group_strings[i] = remove_char_from_string(group_strings[i], ' ');
 	}
 	return group_strings;
+}
+
+int count_distinct_characters(std::string const& input_string) {
+	return 1;
 }
 
 int main() {

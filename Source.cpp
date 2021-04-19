@@ -32,7 +32,7 @@ std::string remove_char_from_string(std::string string_to_clean, char character_
 	return string_to_clean;
 }
 
-std::vector<std::string> split_passports(std::string const& input_string)
+std::vector<std::string> split_groups(std::string const& input_string)
 {
 	std::vector<std::string> group_strings;
 	std::regex re("[\r\n]{2,}");
@@ -57,7 +57,7 @@ int main() {
 	std::stringstream buffer;
 	buffer << fileContents.rdbuf();
 	std::string fileString = buffer.str();
-	auto groupStrings = split_passports(fileString);
+	auto groupStrings = split_groups(fileString);
 	for (int i = 0; i < groupStrings.size(); i++) {
 		sumOfGroupCounts  += count_unique_characters(groupStrings[i]);
 	}

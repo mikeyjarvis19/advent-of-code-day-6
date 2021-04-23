@@ -43,12 +43,6 @@ std::vector<std::string> split_groups(std::string const& input_string)
 		end;
 
 	std::copy(begin, end, std::back_inserter(group_strings));
-
-	// Cleanup the newline and space characters
-	//for (int i = 0; i < group_strings.size(); i++) {
-	//	group_strings[i] = remove_char_from_string(group_strings[i], '\n');
-	//	group_strings[i] = remove_char_from_string(group_strings[i], ' ');
-	//}
 	return group_strings;
 }
 
@@ -66,6 +60,7 @@ int calculate_common_answers(std::vector<std::string> const& group_strings) {
 			auto character_position = member_string.find_first_of(character);
 			if (character_position == std::string::npos) {
 				n = 0;
+				break;
 			}
 		}
 		count += n;
@@ -80,12 +75,18 @@ int main() {
 	std::stringstream buffer;
 	buffer << fileContents.rdbuf();
 	std::string fileString = buffer.str();
-	auto groupStrings = split_groups(fileString);
-	for (int i = 0; i < groupStrings.size(); i++) {
-		sumOfGroupCounts += count_unique_characters(groupStrings[i]);
+	auto groupStrings1 = split_groups(fileString);
+	auto groupStrings2 = split_groups(fileString);
+	// Cleanup the newline and space characters
+	for (int i = 0; i < groupStrings1.size(); i++) {
+		groupStrings1[i] = remove_char_from_string(groupStrings1[i], '\n');
+		groupStrings1[i] = remove_char_from_string(groupStrings1[i], ' ');
+	}
+	for (int i = 0; i < groupStrings1.size(); i++) {
+		sumOfGroupCounts += count_unique_characters(groupStrings1[i]);
 	}
 	std::cout << "Total count: " << sumOfGroupCounts << "\n";
-	for (const auto& group : groupStrings) {
+	for (const auto& group : groupStrings2) {
 		auto groupMembers = parse_member_answers(group);
 		part2sum += calculate_common_answers(groupMembers);
 	}
